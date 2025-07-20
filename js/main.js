@@ -1,14 +1,12 @@
 (function ($) {
     "use strict";
 
-    // Superfish on nav menu
     $('.nav-menu').superfish({
         animation: {opacity: 'show'},
         speed: 400
     });
     
     
-    // Typed Initiate
     if ($('.top-header h2').length == 1) {
         var typed_strings = $('.top-header p').text();
         var typed = new Typed('.top-header h2', {
@@ -21,7 +19,6 @@
     }
 
 
-    // Mobile Navigation
     if ($('#nav-menu-container').length) {
         var $mobile_nav = $('#nav-menu-container').clone().prop({id: 'mobile-nav'});
         $mobile_nav.find('> ul').attr({'class': '', 'id': ''});
@@ -57,7 +54,6 @@
     }
     
     
-    // Smooth scrolling on the navbar links
     $(".nav-menu a, #mobile-nav a").on('click', function (event) {
         if (this.hash !== "") {
             event.preventDefault();
@@ -74,11 +70,9 @@
     });
 
 
-    // Stick the header at top on scroll
     $(".header").sticky({topSpacing: 0, zIndex: '50'});
 
 
-    // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
             $('.back-to-top').fadeIn('slow');
@@ -92,7 +86,6 @@
     });
 
 
-    // Skills section
     $('.skills').waypoint(function () {
         $('.progress .progress-bar').each(function () {
             $(this).css("width", $(this).attr("aria-valuenow") + '%');
@@ -100,14 +93,12 @@
     }, {offset: '80%'});
 
 
-    // jQuery counterUp
     $('[data-toggle="counter-up"]').counterUp({
         delay: 10,
         time: 1000
     });
 
 
-    // Porfolio isotope and filter
     var portfolioIsotope = $('.portfolio-container').isotope({
         itemSelector: '.portfolio-item',
         layoutMode: 'fitRows'
@@ -121,7 +112,6 @@
     });
 
 
-    // Testimonials carousel
     $(".testimonials-carousel").owlCarousel({
         autoplay: true,
         dots: true,
@@ -129,43 +119,34 @@
         items: 1
     });
 
-    // START OF CONTACT FORM JAVASCRIPT (MODIFIED FOR EMAILJS)
-    // Initialize EmailJS with your User ID (Public Key)
-    // This is safe to expose on the client side.
     (function() {
-        // IMPORTANT: Replace "YOUR_EMAILJS_USER_ID" with your actual EmailJS Public Key
         emailjs.init("wWk4cz1VvGwoTruWD"); 
     })();
 
-    // Handle Contact Form Submission
     $("#contactForm").submit(function(e) {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault(); 
 
-        // IMPORTANT: Replace these with your actual EmailJS Service ID and Template ID
         const serviceID = 'service_oylsdwm'; 
         const templateID = 'template_i7w0ro4'; 
 
-        const form = this; // 'this' refers to the form element
+        const form = this; 
         const statusDiv = $("#mailMessage");
         const submitBtn = $("#sendMessageButton");
 
-        // Show "Sending..." message and disable button
-        statusDiv.text("Sending...").removeClass("alert-success alert-danger").addClass("alert-info").fadeIn(); // Use alert-info for sending status
+        statusDiv.text("Sending...").removeClass("alert-success alert-danger").addClass("alert-info").fadeIn(); 
         submitBtn.prop("disabled", true);
-        
-        // Ensure form field names (name="name", name="email", etc.) match EmailJS template variables (e.g., {{name}}).
+
         emailjs.sendForm(serviceID, templateID, form)
             .then(function() {
                 statusDiv.text("Message sent successfully!").removeClass("alert-info").addClass("alert-success").fadeIn();
-                form.reset(); // Clear the form fields
+                form.reset(); 
             }, function(error) {
                 console.error("FAILED to send message...", error);
                 statusDiv.text("Failed to send message. Please try again later.").removeClass("alert-info").addClass("alert-danger").fadeIn();
             })
-            .always(function() { // .always() runs whether it's success or error
-                submitBtn.text("Send Message").prop("disabled", false); // Re-enable button
+            .always(function() { 
+                submitBtn.text("Send Message").prop("disabled", false); 
             });
     });
-    // END OF CONTACT FORM JAVASCRIPT (MODIFIED FOR EMAILJS)
 
 })(jQuery);
